@@ -1,8 +1,18 @@
-function App() {
+import { ToastContainer } from 'react-toastify';
+import { LoadingContextProvider } from './hooks/useLoading';
+import { AuthProvider } from './contexts/auth';
+import { GlobalStyle } from './styles/global';
+import { Routes } from './routes/routes';
+
+function App(): React.ReactElement {
   return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
+    <LoadingContextProvider>
+      <ToastContainer style={{ fontSize: 15, fontFamily: 'sans-serif' }} />
+      <AuthProvider>
+        <Routes />
+        <GlobalStyle />
+      </AuthProvider>
+    </LoadingContextProvider>
   );
 }
 
