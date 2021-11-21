@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import { PrivateRoute } from './PrivateRoute';
 import { AuthRoute } from './AuthRoute';
@@ -29,13 +29,22 @@ export const Routes: React.FC = () => {
       {loading && <Loading />}
       <AuthVerifyComponent />
       <Switch>
-        {/* <Route exact path="/" component={Main} /> */}
-        <AuthRoute exact path="/employee/signin" component={EmployeeSignIn} />
+        <Route
+          exact
+          path="/"
+          render={() => <Redirect to="/funcionario/signin" />}
+        />
+        <AuthRoute
+          exact
+          path="/funcionario/signin"
+          component={EmployeeSignIn}
+        />
         <AuthRoute
           exact
           path="/administrador/signin"
           component={AdministradorSignIn}
         />
+
         {/* <AuthRoute exact path="/register" component={CreateUser} /> */}
         {/* <PrivateRoute
           exact

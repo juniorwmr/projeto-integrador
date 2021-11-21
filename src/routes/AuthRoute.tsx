@@ -13,18 +13,17 @@ export const AuthRoute: React.FC<IRouteProps> = ({
   return (
     <Route
       {...rest}
-      render={
-        routeProps => !isAuthenticated() && <Component {...routeProps} />
-        // !isAuthenticated() ? (
-        //   <Component {...routeProps} />
-        // ) : (
-        //   <Redirect
-        //     to={{
-        //       pathname: '/dashboard/recognitions/pendents',
-        //       state: { from: routeProps.location }
-        //     }}
-        //   />
-        // )
+      render={routeProps =>
+        !isAuthenticated() ? (
+          <Component {...routeProps} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/employee/signin',
+              state: { from: routeProps.location }
+            }}
+          />
+        )
       }
     />
   );
