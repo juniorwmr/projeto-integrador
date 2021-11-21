@@ -3,12 +3,10 @@ import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { isAuthenticated } from '../services/auth';
 
 interface IRouteProps extends RouteProps {
-  keyName: string;
   component: any;
 }
 
-export const PrivateRoute: React.FC<IRouteProps> = ({
-  keyName,
+export const EmployeeAuthRoute: React.FC<IRouteProps> = ({
   component: Component,
   ...rest
 }) => {
@@ -16,19 +14,12 @@ export const PrivateRoute: React.FC<IRouteProps> = ({
     <Route
       {...rest}
       render={routeProps =>
-        isAuthenticated(keyName) ? (
+        !isAuthenticated('@employee/token') ? (
           <Component {...routeProps} />
-        ) : keyName === '@employee/employee' ? (
-          <Redirect
-            to={{
-              pathname: '/employee/signin',
-              state: { from: routeProps.location }
-            }}
-          />
         ) : (
           <Redirect
             to={{
-              pathname: '/admin/signin',
+              pathname: '/employee/dashboard',
               state: { from: routeProps.location }
             }}
           />

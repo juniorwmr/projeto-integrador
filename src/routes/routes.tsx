@@ -1,13 +1,11 @@
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import { PrivateRoute } from './PrivateRoute';
-import { AuthRoute } from './AuthRoute';
+import { EmployeeAuthRoute } from './EmployeeAuthRoute';
+import { AdminAuthRoute } from './AdminAuthRoute';
 
 // Component to check the Authentication
 import AuthVerifyComponent from './AuthVerifyComponent';
-
-// App Public Components
-// import { Main } from '../pages/Public/Main';
 
 // Authentication Components
 import EmployeeSignIn from '../pages/Employee/Auth/SignIn';
@@ -26,23 +24,39 @@ export const Routes: React.FC = () => {
   const { loading } = useLoadingContext();
   return (
     <BrowserRouter>
-      {loading && <Loading />}
-      <AuthVerifyComponent />
       <Switch>
+        {loading && <Loading />}
         <Route
           exact
           path="/"
-          render={() => <Redirect to="/funcionario/signin" />}
+          render={() => <Redirect to="/employee/signin" />}
         />
-        <AuthRoute
-          exact
-          path="/funcionario/signin"
-          component={EmployeeSignIn}
+        <Route
+          path="/employee"
+          render={({ match: { url } }) => (
+            <>
+              <AuthVerifyComponent keyName="@employee/token" />
+              <EmployeeAuthRoute
+                exact
+                path={`${url}/signin`}
+                component={EmployeeSignIn}
+              />
+            </>
+          )}
         />
-        <AuthRoute
-          exact
-          path="/administrador/signin"
-          component={AdministradorSignIn}
+
+        <Route
+          path="/admin"
+          render={({ match: { url } }) => (
+            <>
+              <AuthVerifyComponent keyName="@admin/token" />
+              <AdminAuthRoute
+                exact
+                path={`${url}/signin`}
+                component={AdministradorSignIn}
+              />
+            </>
+          )}
         />
 
         {/* <AuthRoute exact path="/register" component={CreateUser} /> */}
@@ -51,10 +65,10 @@ export const Routes: React.FC = () => {
           path="/dashboard/recognitions"
           component={Recognitions}
         /> */}
-        <Route
+        {/* <Route
           path="*"
           component={() => <h1 style={{ color: 'black' }}>ERROR404</h1>}
-        />
+        /> */}
       </Switch>
     </BrowserRouter>
   );

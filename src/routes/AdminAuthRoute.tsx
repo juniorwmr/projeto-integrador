@@ -6,7 +6,7 @@ interface IRouteProps extends RouteProps {
   component: any;
 }
 
-export const AuthRoute: React.FC<IRouteProps> = ({
+export const AdminAuthRoute: React.FC<IRouteProps> = ({
   component: Component,
   ...rest
 }) => {
@@ -14,12 +14,12 @@ export const AuthRoute: React.FC<IRouteProps> = ({
     <Route
       {...rest}
       render={routeProps =>
-        !isAuthenticated() ? (
+        !isAuthenticated('@admin/token') ? (
           <Component {...routeProps} />
         ) : (
           <Redirect
             to={{
-              pathname: '/employee/signin',
+              pathname: '/admin/dashboard',
               state: { from: routeProps.location }
             }}
           />

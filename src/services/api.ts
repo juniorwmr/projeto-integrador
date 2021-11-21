@@ -11,7 +11,12 @@ const api = axios.create({
 api.interceptors.request.use(
   async (config: AxiosRequestConfig) => {
     const configuration = config;
-    const token = getToken();
+    let token;
+    if (configuration.url?.includes('employee')) {
+      token = getToken('@employee/token');
+    } else {
+      token = getToken('@admin/token');
+    }
 
     if (token && configuration?.headers) {
       configuration.headers.Authorization = `Bearer ${token}`;
@@ -27,7 +32,7 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
-    const { response } = error;
+    const { response, config } = error;
 
     if (error.message === 'Network Error') {
       return toast.error(
@@ -42,7 +47,12 @@ api.interceptors.response.use(
     }
 
     if (response?.status === 401) {
-      logout();
+      if (config.url?.includes('employee')) {
+        logout('@employee/token');
+      } else {
+        logout('@admin/token');
+      }
+
       return Promise.reject(error);
     }
 

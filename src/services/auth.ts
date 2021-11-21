@@ -1,14 +1,14 @@
 import jwt from 'jsonwebtoken';
 
-export const TOKEN_KEY = 'token';
-export const isAuthenticated = (): boolean =>
-  localStorage.getItem(TOKEN_KEY) !== null;
-export const getToken = (): string | null => localStorage.getItem(TOKEN_KEY);
-export const login = (token: string): void => {
-  localStorage.setItem(TOKEN_KEY, token);
+export const isAuthenticated = (keyName: string): boolean =>
+  localStorage.getItem(keyName) !== null;
+export const getToken = (keyName: string): string | null =>
+  localStorage.getItem(keyName);
+export const login = (token: string, keyName: string): void => {
+  localStorage.setItem(keyName, token);
 };
-export const logout = (): void => {
-  localStorage.removeItem(TOKEN_KEY);
+export const logout = (keyName: string): void => {
+  localStorage.removeItem(keyName);
 };
 
 interface IDecodeJWToken {
@@ -23,8 +23,8 @@ export const jwtDecoded = (token: string): jwt.JwtPayload => {
   return jwt.decode(token) as IDecodeJWToken;
 };
 
-export const isTokenExpired = (): boolean => {
-  const token = getToken();
+export const isTokenExpired = (keyName: string): boolean => {
+  const token = getToken(keyName);
   if (!token) {
     return true;
   }

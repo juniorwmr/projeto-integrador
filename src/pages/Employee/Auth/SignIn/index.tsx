@@ -1,4 +1,12 @@
 import SignInForm from '../../../../components/SignInForm';
+import AuthRepository from '../../../../repositories/Auth';
+import { useState } from 'react';
+import Loader from 'react-loader-spinner';
+import { useAuth } from '../../../../contexts/auth';
+import { login } from '../../../../services/auth';
+import { useHistory } from 'react-router';
+import { toast } from 'react-toastify';
+import { PrivateAreaBtn } from './styles';
 
 type IDataForm = {
   cpf: string;
@@ -11,14 +19,38 @@ const defaultData: IDataForm = {
 };
 
 function SignIn() {
-  function onSubmitHandle(data: IDataForm) {
-    console.log(data);
+  const { setSigned } = useAuth();
+  const history = useHistory();
+  const [loading, setLoading] = useState(false);
+
+  async function onSubmitHandle(data: IDataForm) {
+    setLoading(true);
+    const response = await AuthRepository.authEmployee(data);
+    if (response?.data?.accessToken) {
+      setSigned(true);
+      login(response?.data.accessToken, '@employee/token');
+      history.push('/employee/dashboard');
+    } else {
+      toast.error('Dados incorretos, tente novamente!');
+    }
+    setLoading(false);
   }
 
   return (
-    <SignInForm name="Funcionário" data={defaultData} action={onSubmitHandle}>
-      <button type="submit">Entrar</button>
-    </SignInForm>
+    <>
+      <PrivateAreaBtn to="/admin/signin" className="btn-signin">
+        Acesso restrito
+      </PrivateAreaBtn>
+      <SignInForm name="Funcionário" data={defaultData} action={onSubmitHandle}>
+        <button type="submit" disabled={loading}>
+          {!loading ? (
+            'Entrar'
+          ) : (
+            <Loader type="Puff" color="#cecece" height={40} width={40} />
+          )}
+        </button>
+      </SignInForm>
+    </>
   );
 }
 export default SignIn;
