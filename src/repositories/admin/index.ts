@@ -1,4 +1,5 @@
 import { api } from '../../services/api';
+import { IEmployee } from '../employee';
 
 const baseEndPoint = '/admin';
 
@@ -36,6 +37,35 @@ export default {
       return response;
     } catch (err) {
       console.error(`Your request (POST) to ${api} FAILED. \n\n` + err);
+    }
+  },
+
+  async registerEmployee(employee: IEmployee) {
+    try {
+      const response = await api.post<IAuthResponse>(
+        `${baseEndPoint}/employees`,
+        employee,
+        {
+          timeout: 5000
+        }
+      );
+      return response;
+    } catch (err) {
+      console.error(`Your request (POST) to ${api} FAILED. \n\n` + err);
+    }
+  },
+
+  async find(query?: { id?: string; cpf?: string; email?: string }) {
+    try {
+      const response = await api.get<IAuthResponse>(`${baseEndPoint}`, {
+        params: {
+          query
+        },
+        timeout: 5000
+      });
+      return response;
+    } catch (err) {
+      console.error(`Your request (GET) to ${api} FAILED. \n\n` + err);
     }
   }
 };
