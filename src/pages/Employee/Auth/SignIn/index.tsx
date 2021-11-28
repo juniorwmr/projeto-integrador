@@ -1,5 +1,5 @@
 import SignInForm from '../../../../components/SignInForm';
-import AuthRepository from '../../../../repositories/Auth';
+import EmployeeRepository from '../../../../repositories/employee';
 import { useState } from 'react';
 import Loader from 'react-loader-spinner';
 import { useAuth } from '../../../../contexts/auth';
@@ -25,10 +25,10 @@ function SignIn() {
 
   async function onSubmitHandle(data: IDataForm) {
     setLoading(true);
-    const response = await AuthRepository.authEmployee(data);
+    const response = await EmployeeRepository.auth(data);
     if (response?.data?.accessToken) {
       setSigned(true);
-      login(response?.data.accessToken, '@employee/token');
+      login(response?.data.accessToken, '@token/employee');
       history.push('/employee/dashboard');
     } else {
       toast.error('Dados incorretos, tente novamente!');

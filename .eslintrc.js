@@ -21,7 +21,6 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
-    'prettier/prettier': 'error',
     'react/react-in-jsx-scope': 'off',
     'space-before-function-paren': 'off',
     'react/prop-types': 'off',

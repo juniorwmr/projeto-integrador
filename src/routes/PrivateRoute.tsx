@@ -18,7 +18,7 @@ export const PrivateRoute: React.FC<IRouteProps> = ({
       render={routeProps =>
         isAuthenticated(keyName) ? (
           <Component {...routeProps} />
-        ) : keyName === '@employee/employee' ? (
+        ) : keyName === '@token/employee' ? (
           <Redirect
             to={{
               pathname: '/employee/signin',

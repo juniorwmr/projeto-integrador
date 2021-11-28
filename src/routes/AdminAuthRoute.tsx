@@ -14,12 +14,12 @@ export const AdminAuthRoute: React.FC<IRouteProps> = ({
     <Route
       {...rest}
       render={routeProps =>
-        !isAuthenticated('@admin/token') ? (
+        !isAuthenticated('@token/admin') ? (
           <Component {...routeProps} />
         ) : (
           <Redirect
             to={{
-              pathname: '/admin/dashboard',
+              pathname: '/admin/dashboard/contracts',
               state: { from: routeProps.location }
             }}
           />

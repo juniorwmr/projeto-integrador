@@ -13,9 +13,9 @@ api.interceptors.request.use(
     const configuration = config;
     let token;
     if (configuration.url?.includes('employee')) {
-      token = getToken('@employee/token');
+      token = getToken('@token/employee');
     } else {
-      token = getToken('@admin/token');
+      token = getToken('@token/admin');
     }
 
     if (token && configuration?.headers) {
@@ -48,9 +48,9 @@ api.interceptors.response.use(
 
     if (response?.status === 401) {
       if (config.url?.includes('employee')) {
-        logout('@employee/token');
+        logout('@token/employee');
       } else {
-        logout('@admin/token');
+        logout('@token/admin');
       }
 
       return Promise.reject(error);

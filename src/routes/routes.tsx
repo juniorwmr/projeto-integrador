@@ -13,7 +13,12 @@ import AdministradorSignIn from '../pages/Admin/Auth/SignIn';
 // import CreateUser from '../pages/Auth/CreateUser';
 
 // Private Components
-// import Recognitions from '../pages/Dashboard/Recognitions';
+import AdminContracts from '../pages/Admin/Dashboard/Contracts';
+import RegisterEmployees from '../pages/Admin/Dashboard/RegisterEmployees';
+import RegisterContracts from '../pages/Admin/Dashboard/RegisterContracts';
+import AdminProfile from '../pages/Admin/Dashboard/Profile';
+import Contracts from '../pages/Employee/Dashboard/Contracts';
+import EmployeeProfile from '../pages/Employee/Dashboard/Profile';
 // import PendentRecognition from '../pages/Dashboard/PendentRecognition';
 // import ApproveRecognition from '../pages/Dashboard/ApproveRecognition';
 
@@ -35,25 +40,71 @@ export const Routes: React.FC = () => {
           path="/employee"
           render={({ match: { url } }) => (
             <>
-              <AuthVerifyComponent keyName="@employee/token" />
+              <AuthVerifyComponent keyName="@token/employee" />
               <EmployeeAuthRoute
                 exact
                 path={`${url}/signin`}
                 component={EmployeeSignIn}
               />
+              <Route
+                exact
+                path={`${url}/dashboard`}
+                component={() => <Redirect to={`${url}/dashboard/contracts`} />}
+              />
+              <PrivateRoute
+                exact
+                keyName="@token/employee"
+                path={`${url}/dashboard/contracts`}
+                component={Contracts}
+              />
+              <PrivateRoute
+                exact
+                keyName="@token/employee"
+                path={`${url}/dashboard/profile/edit`}
+                component={EmployeeProfile}
+              />
             </>
           )}
         />
-
+        {/* Administrator Routes */}
         <Route
           path="/admin"
           render={({ match: { url } }) => (
             <>
-              <AuthVerifyComponent keyName="@admin/token" />
+              <AuthVerifyComponent keyName="@token/admin" />
               <AdminAuthRoute
                 exact
                 path={`${url}/signin`}
                 component={AdministradorSignIn}
+              />
+              <Route
+                exact
+                path={`${url}/dashboard`}
+                component={() => <Redirect to={`${url}/dashboard/contracts`} />}
+              />
+              <PrivateRoute
+                exact
+                keyName="@token/admin"
+                path={`${url}/dashboard/contracts`}
+                component={AdminContracts}
+              />
+              <PrivateRoute
+                exact
+                keyName="@token/admin"
+                path={`${url}/dashboard/employees/register`}
+                component={RegisterEmployees}
+              />
+              <PrivateRoute
+                exact
+                keyName="@token/admin"
+                path={`${url}/dashboard/contracts/new`}
+                component={RegisterContracts}
+              />
+              <PrivateRoute
+                exact
+                keyName="@token/admin"
+                path={`${url}/dashboard/profile/edit`}
+                component={AdminProfile}
               />
             </>
           )}

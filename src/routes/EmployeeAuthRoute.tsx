@@ -14,12 +14,12 @@ export const EmployeeAuthRoute: React.FC<IRouteProps> = ({
     <Route
       {...rest}
       render={routeProps =>
-        !isAuthenticated('@employee/token') ? (
+        !isAuthenticated('@token/employee') ? (
           <Component {...routeProps} />
         ) : (
           <Redirect
             to={{
-              pathname: '/employee/dashboard',
+              pathname: '/employee/dashboard/contracts',
               state: { from: routeProps.location }
             }}
           />
