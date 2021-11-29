@@ -2,7 +2,7 @@ import Dashboard from '../../../../components/Dashboard/Employee';
 
 function Contracts() {
   return (
-    <Dashboard title="Contratos" isContractsPage={true}>
+    <Dashboard title="Meus Contratos" isContractsPage={true}>
       <></>
     </Dashboard>
   );

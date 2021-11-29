@@ -41,7 +41,7 @@ const usersForm: React.FC<IUserFormProps> = ({
 }) => {
   const [id, setId] = useState(user.id || '');
   const [name, setName] = useState(user.name || '');
-  const [password, setPassword] = useState(user.password || '');
+  const [password, setPassword] = useState('');
   const [email, setEmail] = useState(user.email || '');
   const [cpf, setCPF] = useState(user.cpf || '');
   const [education, setEducation] = useState(user.education || '');
@@ -89,7 +89,6 @@ const usersForm: React.FC<IUserFormProps> = ({
                 <input
                   id="email"
                   name="email"
-                  disabled={isEdit}
                   onChange={e => setEmail(e.target.value)}
                   value={email}
                 />
@@ -98,6 +97,7 @@ const usersForm: React.FC<IUserFormProps> = ({
                 <label htmlFor="birthDate">Data de nascimento</label>
                 <input
                   id="birthDate"
+                  type="date"
                   name="birthDate"
                   disabled={isEdit}
                   onChange={e => setBirthDate(e.target.value)}
@@ -105,18 +105,15 @@ const usersForm: React.FC<IUserFormProps> = ({
                 />
               </InputField>
             </InputGroup>
-            {!isEdit && (
-              <InputField>
-                <label htmlFor="password">Senha</label>
-                <input
-                  id="password"
-                  name="password"
-                  disabled={isEdit}
-                  onChange={e => setPassword(e.target.value)}
-                  value={password}
-                />
-              </InputField>
-            )}
+            <InputField>
+              <label htmlFor="password">Senha</label>
+              <input
+                id="password"
+                name="password"
+                onChange={e => setPassword(e.target.value)}
+                value={password}
+              />
+            </InputField>
             <InputGroup>
               <InputField>
                 <label htmlFor="cpf">CPF</label>
@@ -133,7 +130,6 @@ const usersForm: React.FC<IUserFormProps> = ({
                 <input
                   id="education"
                   name="education"
-                  disabled={isEdit}
                   onChange={e => setEducation(e.target.value)}
                   value={education}
                 />
@@ -145,7 +141,6 @@ const usersForm: React.FC<IUserFormProps> = ({
                 <input
                   id="phone"
                   name="phone"
-                  disabled={isEdit}
                   onChange={e => setPhone(e.target.value)}
                   value={phone}
                 />
