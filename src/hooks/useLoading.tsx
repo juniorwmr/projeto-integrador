@@ -13,8 +13,8 @@ export function LoadingContextProvider({
   children: React.ReactNode;
 }): JSX.Element {
   const [loading, setLoading] = useState(false);
-
   function handleLoading(status: boolean): void {
+    console.log(status);
     setLoading(status);
   }
 

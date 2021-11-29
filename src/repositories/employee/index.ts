@@ -1,4 +1,5 @@
 import { api } from '../../services/api';
+import { IContracts } from '../admin';
 
 const baseEndPoint = '/employee';
 
@@ -53,6 +54,20 @@ export default {
       return response;
     } catch (err) {
       console.error(`Your request (POST) to ${api} FAILED. \n\n` + err);
+    }
+  },
+
+  async listContracts() {
+    try {
+      const response = await api.get<IContracts[]>(
+        `${baseEndPoint}/contracts`,
+        {
+          timeout: 5000
+        }
+      );
+      return response;
+    } catch (err) {
+      console.error(`Your request (GET) to ${api} FAILED. \n\n` + err);
     }
   }
 };
